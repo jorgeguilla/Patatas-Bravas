@@ -1,5 +1,6 @@
 import random
 
+# Se trata de maximizar tasa/tamaño
 def ordenar(lista):
     puntos = 0
     valor = lambda elem: elem[0] / elem[1]
@@ -8,8 +9,8 @@ def ordenar(lista):
 
 
 ejemplo = []
-for i in range(4):
-    ejemplo.append([random.randint(0,100), random.randint(0,100)])
+for i in range(6):
+    ejemplo.append([random.randint(0, 100), random.randint(0, 100)])
 
 print("Sean los ficheros ([tasa, tamaño]):", ejemplo)
 print("Su orden en el disco debería ser:", ordenar(ejemplo))
