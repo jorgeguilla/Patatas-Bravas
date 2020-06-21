@@ -1,4 +1,6 @@
 import random
+import time
+
 
 def minMax(lista, longi):
     if longi % 2 == 0:
@@ -8,19 +10,23 @@ def minMax(lista, longi):
     else:
         i = 1
         maximo = minimo = lista[0]
-        while i < longi - 1:
-            if lista[i] < lista[i + 1]:
-                maximo = max(maximo, lista[i + 1])
-                minimo = min(minimo, lista[i])
-            else:
-                maximo = max(maximo, lista[i])
-                minimo = min(minimo, lista[i + 1])
-                i += 2
+    while i < longi - 1:
+        if lista[i] < lista[i + 1]:
+            maximo = max(maximo, lista[i + 1])
+            minimo = min(minimo, lista[i])
+        else:
+            maximo = max(maximo, lista[i])
+            minimo = min(minimo, lista[i + 1])
+        i += 2
     return [maximo, minimo]
 
 
-lista = [random.randint(0,100) for i in range(20)]
-print(lista)
-long = len(lista)
-numeros = minMax(lista, long)
+for i in range(8):
+    lista = lista = [random.randint(0, 100) for i in range(10 ** i)]
+    t0 = time.time()
+    long = len(lista)
+    numeros = minMax(lista, long)
+    t1 = time.time()
+    print(10 ** i, "tiempo:", t1 - t0)
+
 print("Minimo: ", numeros[1], " Maximo: ", numeros[0])
