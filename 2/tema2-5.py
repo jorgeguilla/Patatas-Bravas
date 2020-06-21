@@ -1,31 +1,49 @@
-def dijkstra ( matriz ,	nodo_destino ):
-        n = len( matriz )
-        costes = [ float ("inf") for i in range(n)]
-        caminos = [[] for i in range(n)]
+from math import inf
 
-        #Configuracion i n i c i a l
-        costes [0] = 0
-        caminos [0] = [0]
-        frontera = [0]
-        actual = 0
 
-        #Resultado hallado o no existe
-        while( actual!=nodo_destino or not frontera ):
-                actual = frontera [costes.index (min(costes) )]
-                frontera.remove(actual)
-                camino_actual = caminos[actual]
+# Entrada: casilla de salida, casilla de llegada, matriz de caminos
+# Salida: Lista con casillas que hay que recorrer para llegar a la meta
+def dijkstra(salida, llegada, matriz):
+    frontera = [[[salida], 0]]  # Almacena [camino, coste]
+    n = len(matriz)
+    conocidos = set()
+    soluciones = []
+    while len(conocidos) < n and len(frontera) > 0:
+        [ruta, coste] = frontera.pop()
+        actual = ruta[-1]
+        if actual == llegada:  # Premio!
+            soluciones.append([ruta, coste])
 
-                for i in range(n):
-                        if matriz [ actual ] [ i ] != -1: #Si el nodo es accesible
-                                 if costes [ i ] == float ("inf" ): #No se ha visitado
-                                        frontera . append( i )
-                                        costes [ i ] = costes [ actual ] + matriz [ actual ] [ i ]
-                                        caminos [ i ] = caminoactual.copy()
-                                        caminos [ i ].append(i)
-                            #Coste mejorable
-                                 elif costes [ i ] > costes[actual] + matriz [actual] [i] :
-                                    costes[i] = costes[actual] + matriz [actual] [i]
-                                    caminos [ i ] = camino_actual.copy ()
-                                    caminos [ i ].append(i)
+        if actual in conocidos:  # Si ya hemos pasado por aquí, andamos en círculos
+            continue
+        else:
+            conocidos.add(actual)
 
-        print(costes[nodo_destino], caminos [ nodo_destino ])
+        for i in range(n):
+            if matriz[actual][i] == inf or actual == i:  # Si es innacesible o es el propio nodo
+                continue
+            frontera += [[ruta + [i], coste + matriz[actual][i]]]
+
+        frontera.sort(key=lambda l: l[1], reverse=True)  # Los caminos más bajos al final, (sacamos con pop)
+
+    return False if len(soluciones) == 0 else soluciones[0][0]
+
+
+matriz = [
+    [0, 42, 5, 1],
+    [3, 0, inf, inf],
+    [inf, 3, 0, 7],
+    [inf, inf, inf, 0]]
+
+matriz2 =[[inf, 4, inf, inf, inf, inf, inf, 8, inf],
+        [4, inf, 8, inf, inf, inf, inf, 11, inf],
+        [inf, 8, inf, 7, inf, 4, inf, inf, 2],
+        [inf, inf, 7, inf, 9, 14, inf, inf, inf],
+        [inf, inf, inf, 9, inf, 10, inf, inf, inf],
+        [inf, inf, 4, 14, 10, inf, 2, inf, inf],
+        [inf, inf, inf, inf, inf, 2, inf, 1, 6],
+        [8, 11, inf, inf, inf, inf, 1, inf, 7],
+        [inf, inf, 2, inf, inf, inf, 6, 7, inf]
+        ]
+
+print(dijkstra(0, 6, matriz))
