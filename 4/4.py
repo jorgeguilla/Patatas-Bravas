@@ -66,8 +66,7 @@ n = int(input("Cantidad de objetos: "))
 
 elementos = []
 for i in range(n):
-    elementos.append(
-        [int(input("Peso del objeto " + str(i + 1) + ": ")), int(input("Valor del objeto " + str(i + 1) + ": "))])
+    elementos.append([int(input("Peso del objeto " + str(i + 1) + ": ")), int(input("Valor del objeto " + str(i + 1) + ": "))])
 
 # Se analizan dos escenarios en función de cual de las bolsas se carga en primer lugar.
 elem2 = elementos.copy()
