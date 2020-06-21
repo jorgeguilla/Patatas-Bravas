@@ -31,8 +31,7 @@ def robot(botellas: list, tapones: list):
 
 
 tapones = [random.randint(0, 100) for i in range(70)]
-
 botellas = tapones.copy()
 botellas.sort(key = lambda l : random.randint(0,10)) #tapones desordenada
-a = 0
+
 robot(tapones, botellas)

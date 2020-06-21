@@ -17,10 +17,8 @@ def busqueda(inicio, rango, funcion, error):
 
 
 # Es una función lineal por trozos.
-# Min y max son enteros x: coordenada [x,0]
-# Min es una lista[x,y] que marca el mínimo
 def funcion(x):
-    inicio, fin, minimo = [0, 0], [100, 0], [30, -100]
+    inicio, fin, minimo = [0, 0], [100, 0], [60, -100]
     m1 = (minimo[1] - inicio[1]) / (minimo[0] - inicio[0])
     m2 = (minimo[1] - fin[1]) / (minimo[0] - fin[0])
 
