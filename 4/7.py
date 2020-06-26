@@ -1,12 +1,13 @@
 import re
 
-#Entrada: dos strings
+#Entrada: dos strings binarias
 #Salida: lista con indices de ocurrencias de s1 en s2
 def apariciones(s1, s2):
     return [m.start() for m in re.finditer(s1, s2)]
 
 s1 = input("Cadena 1: ")
 s2 = input("Cadena 2: ")
+
 
 #Las subcadenas se almacenan de la forma [indice_s1, indice_s2, size]
 #Se comienza con el producto cartesiano de apariciones de 1s de ambas cadenas (substring más pequeña).
@@ -33,4 +34,4 @@ while len(subs) > 0:
     i=0
     s+=1
 
-print(s1[res[0]:res[0]+s])
+print(s1[res[0]:(res[0]+res[2])])
