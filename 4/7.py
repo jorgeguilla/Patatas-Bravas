@@ -1,37 +1,49 @@
-import re
-
-#Entrada: dos strings binarias
-#Salida: lista con indices de ocurrencias de s1 en s2
-def apariciones(s1, s2):
-    return [m.start() for m in re.finditer(s1, s2)]
-
-s1 = input("Cadena 1: ")
-s2 = input("Cadena 2: ")
+def creaMatrizVacia(x, y):
+    Matrix = [[0 for i in range(y)] for j in range(x)]
+    return Matrix
 
 
-#Las subcadenas se almacenan de la forma [indice_s1, indice_s2, size]
-#Se comienza con el producto cartesiano de apariciones de 1s de ambas cadenas (substring más pequeña).
-unos = [[i,j,1] for i in apariciones("1", s1) for j in apariciones("1", s2)]
-ceros =  [[i, j, 1] for i in apariciones("0", s1) for j in apariciones("0", s2)]
+def devolverSecuencia(A, B, secuencia):
+    n1 = len(A)
+    n2 = len(B)
+    matrix = [[0 for i in range(n2)] for j in range(n1)]
+    bmatriz = [[False for i in range(n2)] for e in range(n1)]
 
-subs = unos + ceros
-s = 2
-res = i = 0
-#Se va ampliando la longitud de las cadenas, las que no son substrings de N+1 caracteres
-#se desechan.
-while len(subs) > 0:
-    res = subs[0].copy()
-    while i < len(subs):
-        try:
-            t = subs[i]
-            if s1[t[0] + t[2]] == s2[t[1] + t[2]]:
-                subs[i][2]+=1
-                i+=1
+    for i in range(n1):
+        for j in range(n2):
+
+            if A[i] == B[j]:
+                bmatriz[i][j] = True
+                matrix[i][j] = 1
+                if bmatriz[i - 1][j - 1] and not (i == 0 or j == 0):
+                    matrix[i][j] = matrix[i - 1][j - 1] + 1
+
+            elif matrix[i - 1][j] >= matrix[i][j - 1]:
+                matrix[i][j] = matrix[i - 1][j]
             else:
-                subs.pop(i)
-        except:
-            subs.pop(i)
-    i=0
-    s+=1
+                matrix[i][j] = matrix[i][j - 1]
+    print(matrix)
+    i = 1
+    j = 1
+    L = 0
+    while True:
+        if matrix[i][j] == matrix[i - 1][j - 1] + 1:
+            L += 1
+            secuencia[L] = A[i]
+        if i < n1 - 1:
+            i += 1
+        if j < n2 - 1:
+            j += 1
+        print(n1, n2)
+        if not L < matrix[n1 - 1][n2 - 1]:
+            break
 
-print(s1[res[0]:(res[0]+res[2])])
+    return L
+
+
+A = [1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0]  # no funciona con estos. Edit: ya funciona lok
+B = [1, 0, 1, 0, 0, 1, 0, 0, 1]
+
+n3 = max(len(A), len(B))
+secuencia = ['x' for i in range(n3)]
+print(devolverSecuencia(A, B, secuencia))
